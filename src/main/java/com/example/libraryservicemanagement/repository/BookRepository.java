@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
     boolean existsByTitle(String bookTitle);
-    Book findByTitleEquals(String bookTitle);
     List<Book> findByUserNameEquals(String userName);
     boolean existsByUserNameEquals(String userName);
     @Modifying

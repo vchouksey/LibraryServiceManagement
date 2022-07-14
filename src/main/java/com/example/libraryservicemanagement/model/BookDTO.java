@@ -3,13 +3,11 @@ package com.example.libraryservicemanagement.model;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 
 @Getter
 @Setter
-@ToString
 @RequiredArgsConstructor
 public class BookDTO {
     @NotBlank(message = "author must not be blank")
