@@ -16,11 +16,8 @@ import java.util.Date;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    private Logger log = LoggerFactory.getLogger(ErrorHandler.class);
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> onMethodArgumentNotValidException(MethodArgumentNotValidException ex){
-        log.info("");
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse();
         apiErrorResponse.setStatusCode(HttpStatus.BAD_REQUEST.value());
         apiErrorResponse.setFieldName(ex.getFieldError().getField());
