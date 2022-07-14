@@ -1,7 +1,5 @@
 package com.example.libraryservicemanagement.integration;
 
-import com.example.libraryservicemanagement.TestHelper;
-import com.example.libraryservicemanagement.model.Book;
 import com.example.libraryservicemanagement.model.BookDTO;
 import com.example.libraryservicemanagement.model.LibraryUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,9 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.example.libraryservicemanagement.TestHelper.*;
 import static junit.framework.TestCase.assertEquals;

@@ -68,7 +68,7 @@ class LibraryUserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
+                .andExpect(status().isAccepted())
                 .andExpect(content().json(jsonString));
     }
 }
