@@ -35,7 +35,7 @@ public class ErrorHandler {
     }
 
     @ExceptionHandler(BookBorrowIsNotAllowed.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ResponseEntity<ApiErrorResponse> handleUserNotFoundException(final BookBorrowIsNotAllowed ex) {
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse();
