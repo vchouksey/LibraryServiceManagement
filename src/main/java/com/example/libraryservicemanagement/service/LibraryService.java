@@ -29,7 +29,7 @@ public class LibraryService {
         if (librarySize >= 3){
             throw new BookBorrowIsNotAllowed("more than 3 books not allowed to borrow");
         }
-        for (BookDTO book: libraryUser.getBooks()){
+        for (Book book: libraryUser.getBooks()){
             if (bookRepository.existsByTitle(book.getTitle()) && librarySize < 3){
                     bookRepository.setBookByTitle(libraryUser.getUserName(), book.getTitle());
                     librarySize++;
@@ -41,7 +41,7 @@ public class LibraryService {
 
     public LibraryUser returnBook(LibraryUser libraryUser){
         LibraryUser user = null;
-        for (BookDTO book: libraryUser.getBooks()){
+        for (Book book: libraryUser.getBooks()){
             if (bookRepository.existsByTitle(book.getTitle())){
                 bookRepository.setBookByTitle("",book.getTitle());
             }
@@ -77,7 +77,7 @@ public class LibraryService {
     private LibraryUser getLibraryUser(String userName, List<Book> books){
         LibraryUser libraryUser = new LibraryUser();
         libraryUser.setUserName(userName);
-        libraryUser.setBooks(getBooks(books));
+        libraryUser.setBooks(books);
         return libraryUser;
     }
 

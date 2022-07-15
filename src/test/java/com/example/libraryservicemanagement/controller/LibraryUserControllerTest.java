@@ -1,5 +1,7 @@
 package com.example.libraryservicemanagement.controller;
 
+import com.example.libraryservicemanagement.exception.BookBorrowIsNotAllowed;
+import com.example.libraryservicemanagement.model.LibraryUser;
 import com.example.libraryservicemanagement.service.LibraryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -30,9 +32,10 @@ class LibraryUserControllerTest {
     @Test
     void borrowBooks_whenValidRequest_shouldReturnValidResponse() throws Exception {
         var mapper = new ObjectMapper();
-        when(this.libraryService.borrowBook(getLibraryUser("Vishal Chouksey", actualBookList())))
-                .thenReturn(getLibraryUser("Vishal Chouksey", actualBookList()));
-        String jsonString = mapper.writeValueAsString(getLibraryUser("Vishal Chouksey", actualBookList()));
+        LibraryUser actualLibraryUser = getLibraryUser("Vishal Chouksey", actualBookList());
+        LibraryUser expectedLibraryUser = getLibraryUser("Vishal Chouksey", actualBookList());
+        when(this.libraryService.borrowBook(actualLibraryUser)).thenReturn(expectedLibraryUser);
+        String jsonString = mapper.writeValueAsString(actualLibraryUser);
 
         mockMvc.perform(post("/api/v1/borrowbook")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -45,16 +48,14 @@ class LibraryUserControllerTest {
     @Test
     void borrowBooks_whenInValidRequest_shouldReturnBadRequest() throws Exception {
         var mapper = new ObjectMapper();
-        when(libraryService.borrowBook(getLibraryUser("Vishal Chouksey", getBookList())))
-                .thenReturn(getLibraryUser("Vishal Chouksey", getBookList()));
+        when(libraryService.borrowBook(getLibraryUser("Vishal Chouksey", getBookList()))).thenThrow(new BookBorrowIsNotAllowed("more than 3 books not allowed to borrow"));
         var jsonString = mapper.writeValueAsString(getLibraryUser("Vishal Chouksey", getBookList()));
 
         mockMvc.perform(post("/api/v1/borrowbook")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonString)
                 .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().json(jsonString));
+                .andExpect(status().isBadRequest());
     }
 
     @Test

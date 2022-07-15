@@ -28,7 +28,7 @@ public class TestHelper {
     public static LibraryUser getLibraryUser(String userName, List<Book> books){
         LibraryUser libraryUser = new LibraryUser();
         libraryUser.setUserName(userName);
-        libraryUser.setBooks(getBooks(books));
+        libraryUser.setBooks(books);
         return libraryUser;
     }
 

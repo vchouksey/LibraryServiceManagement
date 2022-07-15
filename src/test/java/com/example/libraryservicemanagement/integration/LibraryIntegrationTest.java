@@ -1,6 +1,7 @@
 package com.example.libraryservicemanagement.integration;
 
-import com.example.libraryservicemanagement.model.BookDTO;
+import com.example.libraryservicemanagement.model.Book;
+import com.example.libraryservicemanagement.model.Book;
 import com.example.libraryservicemanagement.model.LibraryUser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +40,7 @@ public class LibraryIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         String actual = mapper.writeValueAsString(getBooks(getBookList()));
         String actualLibraryUser = mapper.writeValueAsString(getLibraryUser("Vishal Chouksey", getBookList()));
-        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), BookDTO[].class);
+        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), Book[].class);
         ResponseEntity<LibraryUser> responseEntityLibraryUser =
                 restTemplate.exchange(resourceUrlForBorrowBook, HttpMethod.POST, getRequestHeaders(actualLibraryUser), LibraryUser.class);
         assertEquals(HttpStatus.CREATED, responseEntityLibraryUser.getStatusCode());
@@ -47,7 +48,7 @@ public class LibraryIntegrationTest {
         LibraryUser libraryUser = responseEntityLibraryUser.getBody();
         assert libraryUser != null;
         assertEquals(userName, libraryUser.getUserName());
-        BookDTO book = libraryUser.getBooks().get(0);
+        Book book = libraryUser.getBooks().get(0);
         assertEquals(author, book.getAuthor());
         assertEquals(category, book.getCategory());
         assertEquals(title, book.getTitle());
@@ -58,7 +59,7 @@ public class LibraryIntegrationTest {
         ObjectMapper mapper = new ObjectMapper();
         String actual = mapper.writeValueAsString(getBooks(getBookList()));
         String actualLibraryUser = mapper.writeValueAsString(getLibraryUser("Vishal Chouksey", getBookList()));
-        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), BookDTO[].class);
+        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), Book[].class);
         ResponseEntity<LibraryUser> responseEntityLibraryUser =
                 restTemplate.exchange(resourceUrlForBorrowBook, HttpMethod.POST, getRequestHeaders(actualLibraryUser), LibraryUser.class);
         assertEquals(HttpStatus.CREATED, responseEntityLibraryUser.getStatusCode());
@@ -66,7 +67,7 @@ public class LibraryIntegrationTest {
         LibraryUser libraryUser = responseEntityLibraryUser.getBody();
         assert libraryUser != null;
         assertEquals(userName, libraryUser.getUserName());
-        BookDTO book = libraryUser.getBooks().get(0);
+        Book book = libraryUser.getBooks().get(0);
         assertEquals(author, book.getAuthor());
         assertEquals(category, book.getCategory());
         assertEquals(title, book.getTitle());
@@ -79,11 +80,11 @@ public class LibraryIntegrationTest {
     public void CreateBook() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String actual = mapper.writeValueAsString(getBooks(getBookList()));
-        ResponseEntity<BookDTO[]> responseEntity =
-                restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), BookDTO[].class);
+        ResponseEntity<Book[]> responseEntity =
+                restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), Book[].class);
         assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
-        BookDTO[] book = responseEntity.getBody();
+        Book[] book = responseEntity.getBody();
         assert book != null;
         assertEquals(author, book[0].getAuthor());
         assertEquals(category, book[0].getCategory());
@@ -94,12 +95,12 @@ public class LibraryIntegrationTest {
     public void RemoveBook() throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         String actual = mapper.writeValueAsString(getBooks(getBookList()));
-        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), BookDTO[].class);
-        ResponseEntity<BookDTO[]> responseEntity =
-                restTemplate.exchange(resourceUrlForDeleteBook, HttpMethod.DELETE, getRequestHeaders(actual), BookDTO[].class);
+        restTemplate.exchange(resourceUrlForCreateBook, HttpMethod.POST, getRequestHeaders(actual), Book[].class);
+        ResponseEntity<Book[]> responseEntity =
+                restTemplate.exchange(resourceUrlForDeleteBook, HttpMethod.DELETE, getRequestHeaders(actual), Book[].class);
         assertEquals(HttpStatus.ACCEPTED, responseEntity.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, responseEntity.getHeaders().getContentType());
-        BookDTO[] book = responseEntity.getBody();
+        Book[] book = responseEntity.getBody();
         assert book != null;
         assertEquals(author, book[0].getAuthor());
         assertEquals(category, book[0].getCategory());

@@ -15,5 +15,5 @@ public class LibraryUser {
     @NotBlank(message = "user name must not be blank")
     private String userName;
     @Valid
-    private List<BookDTO> books;
+    private List<Book> books;
 }
